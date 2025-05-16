@@ -28,7 +28,7 @@ Copy the `.env-copy` file inside the `src/` directory and rename it to `.env`:
 cp src/.env-copy src/.env
 ```
 
-Edit the file to match your database configuration and other Laravel environment settings.
+Edit the file to match your database configuration and other Laravel environment settings including RabbitMQ settings.
 
 ---
 

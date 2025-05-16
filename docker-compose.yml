@@ -12,6 +12,7 @@ services:
       - pixel-fox
     depends_on:
       - db
+      - rabbitmq
     expose:
       - "9000"
 
@@ -29,6 +30,20 @@ services:
       - app
     networks:
       - pixel-fox
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: pixel-fox-rabbitmq
+    ports:
+      - "5672:5672"     # communication port
+      - "15672:15672"   # panel port (http://localhost:15672)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - pixel-fox
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
 
   db:
     image: mysql:8.0
@@ -48,6 +63,7 @@ services:
 
 volumes:
   dbdata:
+  rabbitmqdata:
 
 networks:
   pixel-fox:
