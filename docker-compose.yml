@@ -5,6 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - UID=1000
+        - GID=1000
+        - USERNAME=${USERNAME}
+        - GROUP_NAME=${GROUP_NAME}
     container_name: pixel-fox-app
     volumes:
       - ./src:/var/www/html
@@ -38,8 +43,8 @@ services:
       - "5672:5672"     # communication port
       - "15672:15672"   # panel port (http://localhost:15672)
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     networks:
       - pixel-fox
     volumes:

@@ -19,7 +19,7 @@
 
         <!-- Image Upload Form -->
 {{--        <form action="{{ route('pixel.generate') }}" method="POST" enctype="multipart/form-data" class="space-y-4">--}}
-        <form>
+        <form  id="pixel-form" enctype="multipart/form-data">
             @csrf
             <div>
                 <input type="file" name="image" id="image"
@@ -29,11 +29,13 @@
                           cursor-pointer"
                        accept="image/*" required>
             </div>
-            <button type="submit"
+            <button
                     class="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded transition">
                 Generate Pixel Art
             </button>
         </form>
+        <div id="status" class="mt-4 text-sm text-gray-600"></div>
+
     </div>
 
     <!-- Image Preview Script -->
@@ -47,5 +49,31 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         });
+    </script>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const response = await fetch("{{ route('pixel.generate') }}", {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+            const taskId = data.task_id;
+
+            console.log('Task queued. ID:', taskId);
+
+            // Start polling
+            Echo.channel('pixel-task.' + taskId)
+                .listen('PixelArtGenerated', (e) => {
+                    console.log('✔️ Pixel art gotowy:', e.taskId);
+                    alert('🎉 Pixel art gotowy!');
+                });
+        });
+
+
     </script>
 @endsection

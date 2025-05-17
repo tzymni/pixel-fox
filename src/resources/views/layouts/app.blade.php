@@ -33,6 +33,14 @@
     &copy; {{ date('Y') }} Pixel Fox by Tomasz Zymni (tomasz.zymni@gmail.com)
 </footer>
 
+<script>
+    window.Laravel = {
+        pusherKey: "{{ env('PUSHER_APP_KEY') }}",
+        pusherCluster: "{{ env('PUSHER_APP_CLUSTER') }}"
+    };
+</script>
+
+<script src="{{ asset('js/app.js') }}"></script>
 @stack('scripts')
 </body>
 </html>

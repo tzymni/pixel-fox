@@ -1,6 +1,6 @@
 # Pixel Fox
 
-Pixel Fox is a web application powered by Laravel and MySQL, configured using Docker for local development.
+Pixel Fox is a web application powered by Laravel, RabbitMQ, Pusher and MySQL, configured using Docker for local development.
 
 ## Getting Started
 
@@ -18,7 +18,16 @@ Copy the `.env-copy` file in the root directory and rename it to `.env`:
 cp .env-copy .env
 ```
 
-Then, edit the file and fill in the database connection details.
+Edit the file and make sure to provide the following values:
+
+```shell
+USERNAME=user
+GROUPNAME=user
+RABBITMQ_DEFAULT_USER=guest
+RABBITMQ_DEFAULT_PASS=guest
+```
+These variables are used for setting up Docker user permissions and RabbitMQ credentials.
+
 
 #### Laravel (`src/`) Directory
 
@@ -28,7 +37,7 @@ Copy the `.env-copy` file inside the `src/` directory and rename it to `.env`:
 cp src/.env-copy src/.env
 ```
 
-Edit the file to match your database configuration and other Laravel environment settings including RabbitMQ settings.
+Edit the file to match your database configuration and other Laravel environment settings including RabbitMQ settings and Pusher credentials.
 
 ---
 
@@ -64,7 +73,17 @@ This will start the MySQL database, Laravel app, and Nginx server.
 
 ---
 
-### 4. Run Laravel Migrations
+### 4. Install and Build Frontend vendor
+
+On your host machine (not inside Docker), install Node dependencies and build the frontend assets:
+```shell
+cd src
+npm install
+npm run build
+```
+This step compiles JavaScript (including Echo + Pusher setup) and is required for broadcasting to work.
+
+### 5. Run Laravel Migrations
 
 Access the Laravel container:
 
@@ -80,7 +99,15 @@ php artisan migrate
 
 ---
 
-### 5. Open the Application
+### 6. Run queue
+
+Run queue worker to process requests from the site. 
+
+```shell
+docker-compose exec app php artisan queue:work
+```
+
+### 7. Open the Application
 
 Visit [`https://pixel-fox.test`](https://pixel-fox.test) in your browser.
 
