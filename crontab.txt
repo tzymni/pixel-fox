@@ -1,0 +1,1 @@
+0 * * * * cd /var/www/html && php artisan files:cleanup-expired >> /var/log/cron.log 2>&1

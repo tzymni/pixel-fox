@@ -10,15 +10,18 @@
                  class="w-full h-auto relative z-10 pointer-events-none select-none">
 
             <!-- User Uploaded Image (below) -->
+{{--            <img id="preview-image" src="#"--}}
+{{--                 alt="Uploaded Image"--}}
+{{--                 class="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain z-0 hidden--}}
+{{--                 max-w-[60%] max-h-[50%] "--}}
+{{--                 >--}}
             <img id="preview-image" src="#"
                  alt="Uploaded Image"
                  class="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain z-0 hidden
-                 max-w-[60%] max-h-[50%]"
-                 >
+            max-w-[60%] max-h-[50%] origin-center"
+            >
         </div>
-
         <!-- Image Upload Form -->
-{{--        <form action="{{ route('pixel.generate') }}" method="POST" enctype="multipart/form-data" class="space-y-4">--}}
         <form  id="pixel-form" enctype="multipart/form-data">
             @csrf
             <div>
@@ -26,7 +29,9 @@
                        class="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
                           file:rounded file:border-0 file:text-sm file:font-semibold
                           file:bg-orange-100 file:text-orange-700 hover:file:bg-orange-200
-                          cursor-pointer"
+                          cursor-pointer
+
+                          "
                        accept="image/*" required>
             </div>
             <button

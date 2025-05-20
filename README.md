@@ -85,17 +85,7 @@ This step compiles JavaScript (including Echo + Pusher setup) and is required fo
 
 ### 5. Run Laravel Migrations
 
-Access the Laravel container:
-
-```bash
-docker exec -it pixel-fox-app bash
-```
-
-Inside the container, run:
-
-```bash
-php artisan migrate
-```
+Laravel migration will be executed automatically by docker-entrypoint.sh when the MySQL database will be ready.
 
 ---
 

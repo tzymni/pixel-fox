@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessPixelRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Support\Facades\Cache;
+
 /**
  * Controller to send the request of generating image from the frontend to the RabbitMQ.
  *
@@ -14,6 +15,8 @@ class GeneratePixel extends Controller
 {
 
     /**
+     * Controller to send request to generate image in pixel art.
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -24,6 +27,7 @@ class GeneratePixel extends Controller
         ]);
 
         $imagePath = $request->file('image')->store('uploads', 'public');
+        Cache::put("file_expire:{$imagePath}", true, now()->addHours(2));
 
         $taskId = uniqid('pixel_', true);
 
@@ -35,4 +39,18 @@ class GeneratePixel extends Controller
         ]);
     }
 
+
+    /**
+     * Generate index view.
+     *
+     * @return object
+     */
+    public function index(): object
+    {
+        return view('index')->with([
+            'pusherKey' => config('broadcasting.connections.pusher.key'),
+            'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+        ]);
+
+    }
 }

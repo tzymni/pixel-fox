@@ -35,8 +35,8 @@
 
 <script>
     window.Laravel = {
-        pusherKey: "{{ env('PUSHER_APP_KEY') }}",
-        pusherCluster: "{{ env('PUSHER_APP_CLUSTER') }}"
+        pusherKey: "{{ $pusherKey}}",
+        pusherCluster: "{{ $pusherCluster }}"
     };
 </script>
 
