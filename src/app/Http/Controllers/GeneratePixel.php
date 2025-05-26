@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessPixelRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Facades\Cache;
 

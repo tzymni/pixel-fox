@@ -12,9 +12,12 @@ class PixelArtGenerated implements ShouldBroadcast
 
     public string $taskId;
 
-    public function __construct(string $taskId)
+    public string $pixelImageName;
+
+    public function __construct(string $taskId, string $pixelImageName)
     {
         $this->taskId = $taskId;
+        $this->pixelImageName = $pixelImageName;
     }
 
     public function broadcastOn()
