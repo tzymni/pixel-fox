@@ -2,7 +2,7 @@ FROM php:8.2-fpm
 
 # Install required system dependencies: PHP extensions, Python, tools
 RUN apt-get update && apt-get install -y \
-    python3 python3-venv python3-pip sudo cron git curl zip unzip \
+    python3 python3-venv python3-pip sudo git curl zip unzip \
     libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libxml2-dev \
     libzip-dev default-mysql-client && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
@@ -25,8 +25,7 @@ RUN addgroup --gid $GID $GROUP_NAME && \
     usermod -aG sudo $USERNAME && \
     echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# Copy crontab and entrypoint script
-COPY crontab.txt /crontab.txt
+# Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 

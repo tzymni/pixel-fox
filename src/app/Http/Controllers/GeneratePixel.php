@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessPixelRequest;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Facades\Cache;
@@ -28,10 +29,10 @@ class GeneratePixel extends Controller
         ]);
 
         $imagePath = $request->file('image')->store('uploads', 'public');
-        Cache::put("file_expire:{$imagePath}", true, now()->addHours(2));
 
+        // remove expired files
+        Artisan::call('files:cleanup-expired');
         $taskId = uniqid('pixel_', true);
-
         ProcessPixelRequest::dispatch($taskId, $imagePath);
 
         return response()->json([
