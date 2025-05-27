@@ -12,4 +12,5 @@ until php artisan migrate --force; do
   sleep 5
 done
 
+php artisan rabbitmq:consume --timeout 120
 exec php-fpm

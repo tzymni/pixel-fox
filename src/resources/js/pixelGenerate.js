@@ -24,7 +24,7 @@ async function handleFormSubmit(e) {
     previewImage.classList.add('spin-y');
 
     if (isPortrait) {
-        previewImage.classList.add('top-[15%]', 'left-[30%]');
+        previewImage.classList.add('top-[17%]', 'left-[25%]');
     } else {
         previewImage.classList.add('top-[30%]', 'left-[20%]');
     }
@@ -39,11 +39,13 @@ async function handleFormSubmit(e) {
         credentials: 'same-origin'
     });
 
+    console.log(response)
     if (!response.ok) {
-        // Obsłuż błąd HTTP jeśli jest
         console.error('HTTP error', response.status);
         generating = false;
-        previewImage.classList.remove('spin-y', 'top-[15%]', 'top-[30%]', 'left-[20%]', 'left-[30%]');
+        previewImage.classList.remove('spin-y', 'top-[17%]', 'top-[30%]', 'left-[20%]', 'left-[25%]');
+        previewImage.classList.add('hidden');
+        alert(response.statusText);
         return;
     }
 
@@ -52,10 +54,10 @@ async function handleFormSubmit(e) {
 
     console.log('Task queued. ID:', taskId);
 
-    Echo.channel('pixel-task.' + taskId).listen('PixelArtGenerated', (e) => {
+    Echo.channel('pixel-task.' + taskId).listen('PixelImageGenerated', (e) => {
         const linkPixel = '/storage/pixel_images/' + e.pixelImageName;
         previewImage.src = linkPixel;
-        previewImage.classList.remove('spin-y', 'top-[15%]', 'top-[30%]', 'left-[20%]', 'left-[30%]');
+        previewImage.classList.remove('spin-y', 'top-[17%]', 'top-[30%]', 'left-[20%]', 'left-[25%]');
         generating = false;
     });
 }

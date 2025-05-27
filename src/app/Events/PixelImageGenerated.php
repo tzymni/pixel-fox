@@ -6,7 +6,12 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 
-class PixelArtGenerated implements ShouldBroadcast
+/**
+ * Event to inform frontend about generated pixel image.
+ *
+ * @author Tomasz Zymni <tomasz.zymni@gmail.com>
+ */
+class PixelImageGenerated implements ShouldBroadcast
 {
     use SerializesModels;
 
@@ -20,7 +25,10 @@ class PixelArtGenerated implements ShouldBroadcast
         $this->pixelImageName = $pixelImageName;
     }
 
-    public function broadcastOn()
+    /**
+     * @return Channel
+     */
+    public function broadcastOn(): Channel
     {
         return new Channel('pixel-task.' . $this->taskId);
     }

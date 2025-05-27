@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Cleanup expired files from the upload directory.
+ * Cleanup expired files from the uploads/pixel_images directory.
  *
  * @author Tomasz Zymni <tomasz.zymni@gmail.com>
  */

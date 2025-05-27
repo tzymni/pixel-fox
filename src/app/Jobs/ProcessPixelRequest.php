@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Events\PixelArtGenerated;
+use App\Events\PixelImageGenerated;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -40,7 +40,7 @@ final class ProcessPixelRequest implements ShouldQueue
         try {
             $this->runProcess();
             Log::info('Pixel art generated', ['path' => $this->imageOutputPath]);
-            event(new PixelArtGenerated($this->taskId, $this->imageName));
+            event(new PixelImageGenerated($this->taskId, $this->imageName));
         } catch (ProcessFailedException $e) {
             Log::error('Pixel art generation failed', [
                 'task_id' => $this->taskId,
@@ -78,10 +78,10 @@ final class ProcessPixelRequest implements ShouldQueue
             self::SCRIPT_COMMAND,
             $inputPath,
             $this->relativeOutputPath,
-            '--factor',
-            '3',
+//            '--factor',
+//            '3',
             '--palette',
-            '16'
+            '32'
 
         ];
     }
