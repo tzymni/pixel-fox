@@ -3,7 +3,7 @@
 Pixel Fox is a small web application powered by Laravel, RabbitMQ, Pusher and MySQL, configured using Docker for local development.
 It uses a pyxelate tool https://github.com/sedthh/pyxelate/ to convert your image to pixel art.
 
-![Demo](src/public/images/pixelfox-org.gif)
+![Demo](/src/public/images/pixelfox-org.gif)
 
 ## Getting Started
 
